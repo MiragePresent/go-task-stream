@@ -11,6 +11,8 @@
 // Guarantees:
 //   - API-level contracts are transport-neutral
 //   - Capability mismatches are represented with ErrNotSupported
+//   - Tuning options may fall back to backend defaults when unsupported
+//     directly; adapter docs define exact fallback behavior
 //
 // Non-goals in core v1:
 //   - Exactly-once semantics

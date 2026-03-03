@@ -1,7 +1,5 @@
 package taskstream
 
-import "fmt"
-
 // Publisher publishes messages to a bound stream.
 type Publisher[T any] interface {
 	// Publish writes msg to the stream and returns a backend message identifier
@@ -51,11 +49,8 @@ type StreamOpener[T any] interface {
 
 // OpenStream opens a logical stream by name and returns a bound Stream.
 //
-// The core package defines this contract but does not ship a concrete backend
-// implementation in phase 1. Until a backend provides an opener integration,
-// this function returns ErrNotSupported.
+// The core package provides lifecycle semantics and option handling for this
+// stream. Delivery guarantees and behavior are backend-specific.
 func OpenStream[T any](name string, opts ...StreamOption) (Stream[T], error) {
-	_ = name
-	_ = opts
-	return nil, fmt.Errorf("taskstream open stream: %w", ErrNotSupported)
+	return openCoreStream[T](name, opts...)
 }
