@@ -91,4 +91,8 @@ func main() {
 ## Current Status
 
 - Core contract, lifecycle semantics, and race-tested concurrency behavior are implemented.
-- Helper runtimes and concrete adapter packages are planned separately.
+- Optional helper/runtime packages are available:
+  - `consumer/loop`: reusable message loop consumer.
+  - `consumer/pipeline`: ordered step pipeline consumer with optional output routing.
+- Optional adapter package is available:
+  - `adapter/memory`: in-memory fan-out stream adapter for local development/testing.
