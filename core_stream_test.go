@@ -195,4 +195,3 @@ func TestSubscribeWithContextCancelClosesSubscription(t *testing.T) {
 		t.Fatalf("sub.Messages() channel did not close after context cancel")
 	}
 }
-
