@@ -24,6 +24,27 @@ func TestOpenStreamValidation(t *testing.T) {
 	}
 }
 
+func TestOpenStreamAppliesStreamOptions(t *testing.T) {
+	t.Parallel()
+
+	called := false
+	opt := taskstream.StreamOption(func(cfg *taskstream.StreamConfig) error {
+		_ = cfg
+		called = true
+		return nil
+	})
+
+	stream, err := OpenStream[string]("with-option", opt)
+	if err != nil {
+		t.Fatalf("OpenStream(with option) error = %v, want nil", err)
+	}
+	defer stream.Close()
+
+	if !called {
+		t.Fatalf("stream option called = false, want true")
+	}
+}
+
 func TestFanOutPublishSubscribe(t *testing.T) {
 	t.Parallel()
 
@@ -193,4 +214,3 @@ func TestConcurrentPublishAndClose(t *testing.T) {
 	_ = stream.Close()
 	wg.Wait()
 }
-

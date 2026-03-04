@@ -31,12 +31,13 @@ func OpenStream[T any](name string, opts ...taskstream.StreamOption) (taskstream
 	if !isValidStreamName(name) {
 		return nil, fmt.Errorf("open memory stream %q: %w", name, taskstream.ErrInvalidStream)
 	}
-	// StreamOption currently cannot be interpreted outside the core package
-	// because its config type is package-private. Reject non-nil options
-	// explicitly for now.
+	var cfg taskstream.StreamConfig
 	for _, opt := range opts {
-		if opt != nil {
-			return nil, fmt.Errorf("open memory stream option: %w", taskstream.ErrNotSupported)
+		if opt == nil {
+			continue
+		}
+		if err := opt(&cfg); err != nil {
+			return nil, err
 		}
 	}
 

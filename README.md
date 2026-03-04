@@ -92,7 +92,7 @@ func main() {
 
 - Core contract, lifecycle semantics, and race-tested concurrency behavior are implemented.
 - Optional helper/runtime packages are available:
-  - `consumer/loop`: reusable message loop consumer.
-  - `consumer/pipeline`: ordered step pipeline consumer with optional output routing.
+  - `consumer/loop`: reusable message loop consumer (continues on handler errors; optional per-message error hook).
+  - `consumer/pipeline`: ordered step pipeline consumer with optional output routing (continues on per-message step/router errors; optional error hook).
 - Optional adapter package is available:
   - `adapter/memory`: in-memory fan-out stream adapter for local development/testing.

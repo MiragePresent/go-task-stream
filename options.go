@@ -20,9 +20,13 @@ type SubscribeConfig struct {
 type SubscribeOption func(*SubscribeConfig) error
 
 // StreamOption configures stream open behavior.
-type StreamOption func(*streamConfig) error
+type StreamOption func(*StreamConfig) error
 
-type streamConfig struct{}
+// StreamConfig contains parsed stream open option values.
+//
+// v1 keeps this struct intentionally minimal. Future stream-level options can
+// add fields without changing StreamOption shape.
+type StreamConfig struct{}
 
 func parseSubscribeOptions(opts ...SubscribeOption) (SubscribeConfig, error) {
 	cfg := SubscribeConfig{
@@ -54,14 +58,14 @@ func parseSubscribeOptions(opts ...SubscribeOption) (SubscribeConfig, error) {
 	return cfg, nil
 }
 
-func parseStreamOptions(opts ...StreamOption) (streamConfig, error) {
-	var cfg streamConfig
+func parseStreamOptions(opts ...StreamOption) (StreamConfig, error) {
+	var cfg StreamConfig
 	for _, opt := range opts {
 		if opt == nil {
 			continue
 		}
 		if err := opt(&cfg); err != nil {
-			return streamConfig{}, err
+			return StreamConfig{}, err
 		}
 	}
 	return cfg, nil
